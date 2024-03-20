@@ -28,13 +28,16 @@ export const App = () => {
 
     //useEffect 사용해보기
     useEffect(() => {
-        alert("회원가입을먼저 진행해라");
-
+        //alert("회원가입을먼저 진행해라");
+        console.log(num)
+        
     }, [num])
 
     //버튼 클릭시 State를 카운트업
     const onClickButton = () => {
         setNum(num + 1)
+
+       
     };
 
     //재랜더링이란 차이가 있는 DOM을 감지하고 업데이트하여 반영해 화면을 표시한다.

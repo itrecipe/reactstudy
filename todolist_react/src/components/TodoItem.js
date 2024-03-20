@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import './TodoItem.css';
 
 class TodoItem extends Component {
@@ -16,7 +16,7 @@ class TodoItem extends Component {
                     <div>{text}</div>
                 </div>
                 {
-                    checked && (<div className="check-mark">v</div>)
+                    checked && (<div className="check-mark">✓</div>)
                 }
             </div>
         );
