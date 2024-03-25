@@ -23,3 +23,18 @@
 .create-button:hover {
     background: #3bc9db;
 }
+/* .update-button {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: 1rem;
+    background: black;
+    border-radius: 3px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+.update-button:hover {
+    background: #3bc9db;
+} */

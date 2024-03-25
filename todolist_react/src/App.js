@@ -2,44 +2,49 @@ import React, { Component } from 'react';
 import TodoListTemplate from './components/TodoListTemplate';
 import Form from './components/Form';
 import TodoItemList from './components/TodoItemList';
+import Palette from './components/Palette';
+
+const colors = ['#343a40', '#f03e3e', "#12b886", '#228ae6'];
 
 class App extends Component {
 
-  id = 3; //이미 0, 1, 2가 이미 존재하기 때문에 그래서 3으로 설정한다.
+  id = 4; //이미 0, 1, 2가 이미 존재하기 때문에 그래서 3으로 설정한다.
 
   state = {
     input: '',
     todos: [
       { id: 0, text: '리액트 소개', checked: false },
-      { id: 1, text: '리액트 소개1', checked: true },
-      { id: 2, text: '리액트 소개2', checked: false }
+      { id: 1, text: 'JSX 사용 하기', checked: true },
+      { id: 2, text: '라이프 사이클 이해', checked: false },
+      { id: 3, text: '컴포넌트 사용하기', checked: false }
     ]
   }
 
   handleChange = (e) => {
     this.setState({
-      input : e.target.value // input의 다음 변경될 값
+      input: e.target.value // input의 다음 변경될 값
     });
   }
 
   handleCreate = () => {
-    const { input, todos } = this.state;
+    const { input, todos, color } = this.state;
     this.setState({
       input: '', //인풋을 비우고, concat을 사용하여 배열에 추가한다.
       todos: todos.concat({
         id: this.id++,
         text: input,
-        checked: false
+        checked: false,
+        color
       })
-    })
+    });
   }
 
   handleKeyPress = (e) => {
 
-      if(e.key === 'Enter') {
-        this.handleCreate();
-      }
-   
+    if (e.key === 'Enter') {
+      this.handleCreate();
+    }
+
   }
 
   // 체크 (활성화 & 비활성화)
@@ -69,20 +74,43 @@ class App extends Component {
     this.setState({
       /*  todos 배열을 새로운 배열로 대체한다. 
       대체할때 특정 id값과 일치하지 않는 todo만 필터링해서 새 배열을 생성한다. */
-      todos : todos.filter(todo => todo.id !== id)
+      todos: todos.filter(todo => todo.id !== id)
       /*  filter 메소드는 필요없는 문자나 문자열을 걸러내거나,
           걸러낸것을 새로운 배열을 반환해줄때 사용한다 */
     })
   }
 
+  handleUpdate = (id, text) => {
+    const { todos } = this.state;
+    const index = todos.findIndex(todo => todo.id === id);
+
+    const updatedTodos = [
+      ...todos.slice(0, index), //업데이트 대상 아이템 이전의 아이템들
+    {
+      ...todos[index],
+      text : text //새로운 텍스트로 업데이트
+    },
+      ...todos.slice(index + 1) //업데이트 대상 아이템 이후의 아이템들
+    ];
+    this.setState({
+      todos: updatedTodos
+    })
+  }
+  handleSelectColor = (color) => {
+    this.setState({
+      color
+    })
+  }
+  
   render() {
-    const { input, todos } = this.state;
+    const { input, todos, color } = this.state;
     const {
       handleChange,
       handleCreate,
       handleKeyPress,
       handleToggle,
-      handleRemove
+      handleRemove,
+      handleSelectColor
     } = this;
 
     return (
@@ -92,8 +120,12 @@ class App extends Component {
           onKeyPress={handleKeyPress}
           onChange={handleChange}
           onCreate={handleCreate}
-          />
-      )}>
+          color={color}
+        />
+      )}
+        palette={(
+          <Palette colors={colors} selected={color} onSelect={handleSelectColor} />
+        )}>
         <TodoItemList todos={todos} onToggle={handleToggle} onRemove={handleRemove} />
       </TodoListTemplate>
     );
