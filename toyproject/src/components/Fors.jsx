@@ -1,9 +1,10 @@
 export const Fors = (props) => {
     let ans=""
+    const a=["a","b","c"]
     const display = () =>{
         const text=[]
-        for (let i=0; i<props.number;i++){
-            ans=<p>{i}</p>;
+        for (let i=0; i<a.length;i++){
+            ans=<p>{a[i]}</p>;
             text.push(ans)
 
         }
