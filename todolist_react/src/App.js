@@ -92,6 +92,7 @@ class App extends Component {
     },
       ...todos.slice(index + 1) //업데이트 대상 아이템 이후의 아이템들
     ];
+
     this.setState({
       todos: updatedTodos
     })
