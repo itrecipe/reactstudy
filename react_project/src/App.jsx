@@ -8,6 +8,12 @@ export const App=()=>{
         <div>
         <Routes >
         <Route path="/" element={<Main />} />
+        
+        {/* {arrays.map((list) => 
+          <Route path={`/${list.id}`} element={Main id={array}
+        ))} */}
+
+
         <Route path="/Login" element={<Login />} />
         <Route path="/Write" element={<Write />} />
       </Routes >
