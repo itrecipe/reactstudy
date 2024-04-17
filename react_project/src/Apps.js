@@ -68,7 +68,6 @@ export const Apps = () => {
   };
 
   //상세조회
-
   return (
     <div>
       <button onClick={imgButton}>이미지</button> 

@@ -1,36 +1,34 @@
-import React, { useState } from 'react';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword,updateProfile } from 'firebase/auth';
+import React, { useContext, useState } from 'react';
+import { createUserWithEmailAndPassword, setPersistence, getAuth, browserSessionPersistence, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import './Login.scss';
-import { auth } from "./firebase-config"
+import {Navigate } from 'react-router-dom'; // Redirect 추가
+import {AdminFlagContext} from "../providers/Flag"
 
 export const Login = () => {
   const [isSignUp, setIsSignUp] = useState(false);
-  const [email,setEmail]=useState("");
-  const [password,setPw]=useState("");
-  const [name,setName]=useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPw] = useState("");
+  const [name, setName] = useState("")
+  const {user, setUser} = useContext(AdminFlagContext)
+
 
   const toggleForm = () => {
     setIsSignUp((prev) => !prev);
   };
 
- 
-  
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // 로그인 또는 회원가입 처리
     if (isSignUp) {
-      register()
-      // 회원가입 처리
+      await register(); // await 추가
     } else {
-      loginex();
-      console.log(auth.currentUser.displayName)
-      // 로그인 처리
+      await loginex(); // await 추가
     }
   };
 
-  const register = async ()=>{
+  const register = async () => {
     try {
-      const userCreate=await createUserWithEmailAndPassword(
+      const userCreate = await createUserWithEmailAndPassword(
         auth,
         email,
         password
@@ -38,12 +36,13 @@ export const Login = () => {
 
       await updateProfile(auth.currentUser, { displayName: name });
       
-      console.log("회원가입")
-    } catch(error){
-      console.log("회원가입 오류")
+      console.log("회원가입");
+      setUser(true); // 회원가입 성공 시 로그인 상태 변경
+    } catch (error) {
+      console.log("회원가입 오류");
     }
   }
- 
+
   const loginex = async () => {
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -51,17 +50,32 @@ export const Login = () => {
         email,
         password
       );
-      console.log("로그인완료")
-      console.log(userCredential)
+
+      console.log("로그인완료");
+      console.log(userCredential);
+
+      setPersistence(auth, browserSessionPersistence)
+      .then(() => {
+        setUser(true); // 로그인 성공 시 로그인 상태 변경
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      });
     } catch (error) {
-      console.log(error.message)
+      console.log("로그인오류");
+      console.log(error.message);
     }
   }
 
   const auth = getAuth();  // 상태유지 현재창에서만 
 
 
-
+  if (user) {
+    return <Navigate to="/" replace />;
+  }
+  
   return (
     <div className="logroot">
       <div className="logbody">
@@ -98,5 +112,6 @@ export const Login = () => {
         </div>
       </div>
     </div>
+    
   );
 };

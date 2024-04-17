@@ -1,14 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {App} from './App';
+import {Apps} from './Apps';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import {Flag} from "./providers/Flag";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
   <React.StrictMode>
-    <App />
+  <Flag>
+    <App/>
+  </Flag>
   </React.StrictMode>
   </BrowserRouter>
 );
