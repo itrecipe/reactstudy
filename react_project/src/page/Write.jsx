@@ -22,8 +22,7 @@ export const Write=()=>{
         }
    
     }
-
-
+    
     return(
         <div>
 

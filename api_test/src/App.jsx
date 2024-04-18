@@ -1,78 +1,57 @@
-//React 라이브러리와 useCallback, useState, useEffect 훅(hooks)를 가져온다.
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react"; // React 및 필요한 hook 가져오기
+import axios from 'axios'; // HTTP 요청을 보내기 위한 axios 라이브러리 가져오기
 
-//http 요청을 보내기 위해 axios 라이브러리를 가져온다.
-import axios from 'axios';
+export const App = () => { // App 컴포넌트 정의
 
-//함수형 컴포넌트 App을 정의하고 이것을 이름이 지정된 내보내기로 내보낸다.
-export const App = () => {
-  
-  //API 키를 문자열로 저장하는 상수를 선언한다.
-  const API_KEY = "RMLweHeGwN%2B8KPNZCwR2W56r6zhRfTsr%2FFE%2B8arn77y8MBjbWpbJClN2aRsyY3Br9XEojgftBJEBHS2O%2BzysyQ%3D%3D";
-  
-  //데이터를 저장할 상태 변수 data와 이를 업데이트할 함수 setData를 선언한다. (초기값은 빈 배열)
-  const [data, setData] = useState([]);
-  
-  /* 현재 보여줄 이미지 인덱스를 저장하는 상태변수,
-     imgIndex와 이것을 업데이트 해줄 함수 setImgIndex를 선언한다.
-     (초기값 0)
-  */
- // const [loading, setLoading] = useState(true);
-  const [imgIndex, setImgIndex] = useState(0);
-  
-  //이미지 URL을 저장할 상태 변수 img와 이를 업데이트할 함수 setImg를 선언한다. (초기값 빈 배열)
-  const [img,setImg]=useState([])
+  const API_KEY = "RMLweHeGwN%2B8KPNZCwR2W56r6zhRfTsr%2FFE%2B8arn77y8MBjbWpbJClN2aRsyY3Br9XEojgftBJEBHS2O%2BzysyQ%3D%3D"; // API 키 상수 선언
 
-  //데이터를 비동기적으로 로드하는 함수 loadData를 useCallback 훅을 사용해 메모이제이션 한다.
-  const loadData = useCallback(async () => {
-    try { //try 블록 안에선 예외가 발생할 수 있는 코드를 실행한다.
-      //axios.get을 사용해 HTTP GET 요청을 보내고, 응답을 response에 저장한다.
-      const response = await axios.get(`http://apis.data.go.kr/B551011/KorService1/areaBasedList1?serviceKey=${API_KEY}&pageNo=1&numOfRows=5&MobileApp=AppTest&MobileOS=ETC&arrange=A&contentTypeId=12&_type=json`);
-      //응답으로 받은 데이터에서 필요한 부분을 추출해 setData를 통해 data상태를 업데이트 한다.
-      setData(response.data.response.body.items.item);
-    } catch (error) { //try 블록 안의 코드에서 예외가 발생시 catch 블록이 실행된다.
-      console.error("에러", error);
+  const [data, setData] = useState([]); // 데이터 상태 변수 및 업데이트 함수 선언
+  const [imgIndex, setImgIndex] = useState(0); // 이미지 인덱스 상태 변수 및 업데이트 함수 선언
+  const [img, setImg] = useState([]); // 이미지 URL 상태 변수 및 업데이트 함수 선언
+
+  const loadData = useCallback(async () => { // 데이터를 비동기적으로 로드하는 함수 정의
+    try {
+      const response = await axios.get(`http://apis.data.go.kr/B551011/KorService1/areaBasedList1?serviceKey=${API_KEY}&pageNo=1&numOfRows=5&MobileApp=AppTest&MobileOS=ETC&arrange=A&contentTypeId=12&_type=json`); // HTTP GET 요청 보내기
+      setData(response.data.response.body.items.item); // 데이터 상태 업데이트
+    } catch (error) {
+      console.error("에러", error); // 에러 처리
     }
-  /* useCallback의 두 번째 인자로 빈 배열을 전달함으로서,
-   loadData 함수는 컴포넌트가 마운트될 때만 생성된다. */
-  }, []);
+  }, []); // 컴포넌트 마운트 시 한 번만 실행되도록 설정
 
-  useEffect(() => {
-    loadData();
-  }, []); // 처음 실행시키기 위해
+  useEffect(() => { // 데이터 로드를 위한 useEffect 훅
+    loadData(); // 데이터 로드 함수 실행
+  }, []); // 컴포넌트가 처음 렌더링될 때 실행되도록 설정
 
-  //이미지 조회 실행을 위해 
-  useEffect(() => {
-    if (data.length > 0) { //받아온 값이 존재할때 실행하기 위한 코드 
-      loadImg(data);
+  useEffect(() => { // 데이터가 업데이트될 때마다 실행되는 useEffect 훅
+    if (data.length > 0) { // 데이터가 존재하는 경우
+      loadImg(data); // 이미지 로드 함수 실행
     }
-  }, [data]); // data가 없데이트 되었을때 
+  }, [data]); // 데이터가 업데이트될 때마다 실행되도록 설정
 
-  //이미지 조회
-  const loadImg = async (data) => {
-    const imgUrls = [];
-    for (let i = 0; i < data.length; i++) {
+  const loadImg = async (data) => { // 이미지 로드 함수 정의
+    const imgUrls = []; // 이미지 URL 배열 초기화
+    for (let i = 0; i < data.length; i++) { // 데이터 배열 순회
       try {
-        const response = await axios.get(`http://apis.data.go.kr/B551011/KorService1/detailImage1?serviceKey=${API_KEY}&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentId=${data[i].contentid}&imageYN=Y&subImageYN=Y&_type=json`);
-        imgUrls.push(response.data.response.body.items.item[0].originimgurl);
+        const response = await axios.get(`http://apis.data.go.kr/B551011/KorService1/detailImage1?serviceKey=${API_KEY}&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentId=${data[i].contentid}&imageYN=Y&subImageYN=Y&_type=json`); // HTTP GET 요청 보내기
+        imgUrls.push(response.data.response.body.items.item[0].originimgurl); // 이미지 URL 배열에 추가
       } catch (error) {
-        console.error("에러", error);
+        console.error("에러", error); // 에러 처리
       }
     }
-    setImgIndex(0); //이미지 조회 후 인덱스 0으로 초기화
-    setImg(imgUrls);//배열로 저장한 이미지 주소 저장
+    setImgIndex(0); // 이미지 인덱스 초기화
+    setImg(imgUrls); // 이미지 URL 상태 업데이트
   };
 
-  const imgButton = () => {
-    setImgIndex((prevIndex) => (prevIndex + 1) % img.length);
+  const imgButton = () => { // 이미지 변경 버튼 핸들러 함수 정의
+    setImgIndex((prevIndex) => (prevIndex + 1) % img.length); // 이미지 인덱스 업데이트
   };
 
   return (
-    <div>
-      <button onClick={imgButton}>이미지</button> 
-      <img src={img[imgIndex]} alt="이미지" />
+    <div> {/* JSX를 반환 */}
+      <button onClick={imgButton}>이미지</button> {/* 이미지 변경 버튼 */}
+      <img src={img[imgIndex]} alt="이미지" /> {/* 현재 이미지 표시 */}
     </div>
   );
-  
 };
-export default App;
+
+export default App; // App 컴포넌트 내보내기

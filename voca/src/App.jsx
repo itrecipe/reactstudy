@@ -6,9 +6,11 @@ import Welcome from './component/Welcome'
 function App() {
  return <div className='App'>
   <Hello /> {/*이렇게 self close 해주는게 좋다.*/}
-  <Hello />
-  <Hello />
   <Welcome />
+  <Hello />
+  <Hello />
+  <Hello /> 
+{/* 이렇게 한번 컴포넌트를 만들어두면 몇번이든 어디에서든 재사용이 가능하다!  */}
  </div>;
  
 }
