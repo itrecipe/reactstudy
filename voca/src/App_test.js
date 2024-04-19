@@ -1,5 +1,7 @@
 import './App.css';
 
+//컴포넌트와 JSX 사용하는방법
+
 //모든 컴포넌트(함수)는 대문자로 시작한다.
 function App() {
   const name="Tom"; //이름을 받아올 변수 name 생성
@@ -23,10 +25,14 @@ function App() {
       >
         {/* <p>{2 + 3}</p> p태그안에 감싸서 이렇게 작성해주면,
         숫자나 문자열은 잘 나오지만, boolean 타입이나 객체는 
-        표현하지 못한다. */}
-        Hello, {name}. <p>{2 + 3}</p> 
+        표현하지 못한다. 
+        
+        {name} 이렇게 괄호로 감싸줘야 변수안에 있는 값을 표현할 수 있다.
+        */}
+        Hello, {name}. <p>{2 + 3}</p>
       </h1>
       <a href={naver.url}>{naver.name}</a>
+      
     </div>
   );
 }
