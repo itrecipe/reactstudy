@@ -49,7 +49,14 @@ export const Main = () => {
       <button onClick={loginOut} disabled={!user}>로그아웃</button>
 
       {/* MainList 컴포넌트에 데이터 배열을 전달하여 출력 */}
-      <MainList arrays={dataArray} /> {/* dataArray를 props로 전달 */}
+      {/* <MainList arrays={dataArray} /> dataArray를 props로 전달 */}
+      {dataArray.map((item, index) => (
+         //배열 순회
+
+         <MainList arrays={dataArray[index]}></MainList>
+
+))}
+       
     </div>
   )
 }
