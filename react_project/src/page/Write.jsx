@@ -5,11 +5,9 @@ import { useContext, useState } from "react";
 import {Header} from "../components/Header";
 import {Navigate } from 'react-router-dom'; // Redirect 추가
 
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserTrue } from '../hoock/UserTrue';
 export const Write=()=>{
-
 
   const {isUserLoggedIn,userDate} = UserTrue();
 
@@ -18,7 +16,6 @@ export const Write=()=>{
     const[text,setText]=useState("");
     const[check,setcheck]=useState(false);
     const[sum,setsum]=useState(false);
-
 
     const changeimge=(e)=>{
         setImg(e.target.files)
@@ -39,10 +36,8 @@ export const Write=()=>{
 
         } catch(error){
             console.log("파일업로드 에러")
-        }
-   
+        }   
     }
-
 
     //저장//유저 정보 확인할 꺼 받아야한다.
     const writeText = async () => {
@@ -70,8 +65,6 @@ export const Write=()=>{
             await setDoc(doc(db, "newtext", `${number}`), data);
             await setDoc(doc(db, "number", "now"), {number:number+1});
             setsum(true)
-            
-
             
         } catch (error) {
             console.error("작성실패", error);
