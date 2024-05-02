@@ -9,13 +9,11 @@
 <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
 
 <script>
-  const root = decument.getElementbyId("root"); //body 태그안에 선언해둔 id값 root 가져오기
+  const root = document.getElementById("root"); //body 태그안에 선언해둔 id값 root 가져오기
   //React.js로 element 생성, 태그명과 변수명이 같을 필요는 없음(원하는 대로 작명하면됨.)
-  const sapn = React.createElement(
-    "span", 
-    {id : "sexy-span", style: {color: "red"} },
-    "Hello, i'm a span"
-); //단, 여기에 적을때는 태그명과 동일해야함
+  const span = React.createElement("span", null, "Hello, i'm a span");
+  const btn = React.createElement("button", null, "Click me");
+ //단, 여기에 적을때는 태그명과 동일해야함
   ReactDOM.render(span, root) //render의 의미는 저위의 body 태그에 react element를 가지고 html로 만들어 배치하겠다는 뜻이다.
 </script>
 </html>
