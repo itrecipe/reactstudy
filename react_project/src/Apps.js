@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import axios from 'axios';
 
 export const Apps = () => {
-  const API_KEY = "RMLweHeGwN%2B8KPNZCwR2W56r6zhRfTsr%2FFE%2B8arn77y8MBjbWpbJClN2aRsyY3Br9XEojgftBJEBHS2O%2BzysyQ%3D%3D";
+  const API_KEY = "???";
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [imgIndex, setImgIndex] = useState(0);

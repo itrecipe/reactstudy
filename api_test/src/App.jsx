@@ -3,7 +3,7 @@ import axios from 'axios'; // HTTP 요청을 보내기 위한 axios 라이브러
 
 export const App = () => { // App 컴포넌트 정의
 
-  const API_KEY = "RMLweHeGwN%2B8KPNZCwR2W56r6zhRfTsr%2FFE%2B8arn77y8MBjbWpbJClN2aRsyY3Br9XEojgftBJEBHS2O%2BzysyQ%3D%3D"; // API 키 상수 선언
+  const API_KEY = "???"; // API 키 상수 선언
 
   const [data, setData] = useState([]); // 데이터 상태 변수 및 업데이트 함수 선언
   const [imgIndex, setImgIndex] = useState(0); // 이미지 인덱스 상태 변수 및 업데이트 함수 선언

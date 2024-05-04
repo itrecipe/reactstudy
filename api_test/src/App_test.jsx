@@ -14,7 +14,7 @@ function App() {
   // 데이터를 가져오는 함수
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://apis.data.go.kr/B551011/KorService1/areaCode1?serviceKey=EhOPrqvOFlQuM2RT1SYZjtaF0fQA%2FIwoVnXtp4A1aZ%2FY%2BPespSMXPh7HoqwKnDlLnymOEys8PBCnF88OZwAe4Q%3D%3D&numOfRows=10&pageNo=1&MobileOS=AND&MobileApp=appName&_type=json`);
+      const response = await axios.get(`???`);
       // const jsonData = await response.json(); // JSON 데이터를 파싱
       setData(response.data); // 상태 업데이트
       console.log(data)
