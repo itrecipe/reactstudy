@@ -1,46 +1,20 @@
-import { useEffect, useState } from "react";
-import Movie from "./components/Movie"
+import React from "react";
+import Home from "./routes/Home";
+import Detail from "./routes/Detail"
+
+//5.3 버전은 Switch 지원이 안되는 이슈가 있어서 6.23 버전으로 업그레이하고 임포트문을 수정했다.
+//명령어 npm install react-router-dom@latest
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  const [movies, setMovies] = useState([]);
-  const getMovies = async() => {
-    
-    //then 방식보다 요즘은 이 방식을 더 많이 쓴다고 한다.
-    const json = await (
-       await fetch(
-      `https://yts.mx/api/v2/list_movies.json?minimum_rating=10&sort_by=year`
-    )
-  ).json();
-    
-    setMovies(json.data.movies);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    getMovies()
-  }, []);
-
-  console.log(movies);
-
   return (
-    <div>
-    {loading ? (
-      <h1>Loading...</h1>
-    ) : (
-      <div>
-        {movies.map((movie) => (
-          <Movie
-            key={movie.id} //키값을 주는것은 매우중요함
-            coverImg={movie.medium_cover_image} 
-            title={movie.title} 
-            summary={movie.summary} 
-            genres={movie.genres}
-          />
-        ))}
-      </div>
-    )}
-  </div>
+  <Router>
+  <Routes>
+    <Route path="/" element={<Home/>} />
+    <Route path="/Movie/:id" element={<Detail/>} />
+    {/* path="/Movie/:id" id값이 뭔지 알고 싶다고 말하는것 */}
+  </Routes>
+  </Router>
   );
 }
 
