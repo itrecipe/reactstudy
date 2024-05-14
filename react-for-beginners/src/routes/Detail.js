@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom"; //url에 있는 값을 반환해주는 함수 useParams()
 
 function Detail() {
-    const {id} = useParams()
+    const { id } = useParams()
     
     //싱크해줄 함수가 있어야 한다.
     const getMovie = async () => {
