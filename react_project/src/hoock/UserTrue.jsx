@@ -8,8 +8,8 @@ export const UserTrue = () => {
   const auth = getAuth(); // getAuth 함수를 사용하여 auth 객체를 가져옵니다.
     const setauth=()=>{
                 // 사용자의 인증 상태 확인
-             onAuthStateChanged(auth, (user) => {
-                    if (user) {
+                onAuthStateChanged(auth, (user) => {
+                if (user) {
                       console.log("사용자가 로그인되어 있습니다:", user);
                       setUserDate(auth.currentUser)
                       setIsUserLoggedIn(true);
